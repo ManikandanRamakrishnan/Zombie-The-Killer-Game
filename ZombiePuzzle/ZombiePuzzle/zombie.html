@@ -1,0 +1,124 @@
+<!doctype>
+<html>
+<head>
+<style>
+body{
+
+}
+#container{
+position:absolute;
+width:95%;
+height:600px;
+background-color: #B0ACC7  ;
+border:5px solid black;
+
+background-size:cover;
+background-repeat:no-repeat;
+}
+#box{
+heigth:50px;
+width:100px;
+position:absolute;
+Top:440px;
+left:100px;
+}
+#box2{
+heigth:100px;
+width:100px;
+position:absolute;
+Top:480px;
+}
+#dice{
+heigth:100px;
+width:100px;
+position:relative;
+border:8px solid black;
+border-radius:5px;
+top:0px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var clear;
+var count=0;
+var  i=0;
+var random;
+var change=0;
+var zombieLeft=0;
+var manLeft=0;
+var dise=["dice.png","dice2.png","dice3.png","dice4.png","dice5.png","dice6.png"];
+$(document).ready(function(){
+$("#dice").click(function(){
+random=Math.floor(Math.random()*6);
+
+rotate();
+
+});
+function rotateDice(){
+count++;
+if(i>5){
+i=0;
+}
+document.getElementById('image').src=dise[i++];
+if(count==10){
+clearInterval(clear);
+
+document.getElementById('image').src=dise[random];
+if(change==1){
+change=0;
+}else{
+change=1;
+}
+move();
+count=0;
+}
+
+
+}
+function move(){
+if(random==0){
+random=1;
+}
+if(change==1){
+
+var walk=(random*50);
+manLeft+=walk;
+walk+="px";
+$("#box").animate({left:'+='+walk},2000);
+}
+else{
+var walk=(random*50);
+zombieLeft+=walk;
+walk+="px";
+$("#box2").animate({left:'+='+walk},2000);
+
+
+}
+gameOver();
+}
+function rotate(){
+clear=setInterval(rotateDice,80);
+}
+function gameOver(){
+
+//alert(zombieLeft+" "+manLeft);
+if(zombieLeft-1>=(manLeft)) {
+setTimeout(delayhold,3000);
+
+}
+}
+function delayhold(){
+
+alert("game over");
+document.location.reload();
+}
+});
+
+</script>
+</head>
+<body>
+<div id="container"><center><div id="dice" ><img id="image" src="dice.png" width="100%" heigth="100%"></div></center><div id="box2"><img src="zombie2.gif" width="100%" heigth="100%"></div><div id="box"><img src="heman.gif" width="100%" heigth="50%"></div></div>
+
+
+</body>
+</html>
